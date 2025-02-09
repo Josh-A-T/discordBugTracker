@@ -27,7 +27,7 @@ const BugDetails = ({ bugId }) => {
   // Fetch comments for the bug
   useEffect(() => {
     if (bug) {
-      fetch(`https://glacial-cove-03240-981fb717f2fc.herokuapp.com/${bug.issue_id}`)
+      fetch(`https://glacial-cove-03240-981fb717f2fc.herokuapp.com/api/comments/${bug.issue_id}`)
         .then((response) => {
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
