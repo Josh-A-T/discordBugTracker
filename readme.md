@@ -8,7 +8,7 @@ This is an attempt to create a discord bot and associated application to track s
 
 This is the react frontend
 
-live: coming soon
-api live: coming soon
+live: https://taupe-pastelito-765a8e.netlify.app
+api live: https://glacial-cove-03240-981fb717f2fc.herokuapp.com/[api/bugs, api/comments]
 
 Do not install, barely works for me now. There is an attempt at documenting the API in src/docs/testing.html but its late. 
