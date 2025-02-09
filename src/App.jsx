@@ -8,7 +8,7 @@ const BugDetails = ({ bugId }) => {
 
   // Fetch bug details
   useEffect(() => {
-    fetch(`http://127.0.0.1:5000/api/bugs/1707409001`)
+    fetch(`https://glacial-cove-03240-981fb717f2fc.herokuapp.com/api/bugs/1707409001`)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -27,7 +27,7 @@ const BugDetails = ({ bugId }) => {
   // Fetch comments for the bug
   useEffect(() => {
     if (bug) {
-      fetch(`http://127.0.0.1:5000/api/comments/${bug.issue_id}`)
+      fetch(`https://glacial-cove-03240-981fb717f2fc.herokuapp.com/${bug.issue_id}`)
         .then((response) => {
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
