@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const bugReportDetails = ({ bugId }) => {
+const BugReportDetails = ({ bugId }) => {
   const [bug, setBug] = useState(null);
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  
   // Fetch bug details
   useEffect(() => {
     fetch(`http://localhost:5000/api/bugs/${bugId}`)
@@ -83,9 +84,9 @@ const bugReportDetails = ({ bugId }) => {
       ) : (
         <p>No comments found for this bug.</p>
       )}
-    <button onClick={() => navigate("/report-bug")}>Report a New Bug</button>
+    
     </div>
   );
 };
 
-export default bugReportDetails;
+export default BugReportDetails;

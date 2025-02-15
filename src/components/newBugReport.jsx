@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-const newBugReport = () => {
+const NewBugReport = ({ onBugAdded }) => {
   const [username, setUsername] = useState("");
   const [issue, setIssue] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  const [success, setSuccess] = useState(false); // New state for success message
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
+    setSuccess(false); // Reset success state
 
     const newBug = {
       username,
@@ -34,8 +34,17 @@ const newBugReport = () => {
       const data = await response.json();
       console.log("Bug reported successfully:", data);
 
-      // Navigate back to the bug list or details page
-      navigate("/");
+      // Show success message
+      setSuccess(true);
+
+      // Clear the form fields
+      setUsername("");
+      setIssue("");
+
+      // Notify the parent component that a new bug has been added
+      if (onBugAdded) {
+        onBugAdded(data); // Pass the newly created bug data to the parent
+      }
     } catch (error) {
       setError(error.message);
     } finally {
@@ -70,9 +79,14 @@ const newBugReport = () => {
           {loading ? "Submitting..." : "Submit"}
         </button>
       </form>
+
+      {/* Display success message */}
+      {success && <p style={{ color: "green" }}>Bug reported successfully!, close this dialog and refresh the page (Jank for now)</p>}
+
+      {/* Display error message */}
       {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 };
 
-export default newBugReport;
+export default NewBugReport;
