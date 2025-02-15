@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { DeleteBugReport } from "./DeleteBugReport";
+import { Link } from "react-router-dom";
 
 const API_URL = "http://localhost:5000/api/bugs";
 
@@ -36,16 +37,18 @@ export default function ViewAllBugReports({ refresh }) {
       <div className="bug-report-list">
         {bugReports.map((bugReport) => (
           <div className="bug-report-card" key={bugReport.id}>
-            <h3>ID: {bugReport.issue_id}</h3>
-            <div>
-              Reported by {bugReport.username} on {bugReport.date}. It is
-              currently <p className="bug-report-status">{bugReport.status}.</p>
-              <DeleteBugReport
-                issue_id={bugReport.issue_id}
-                onRemove={() => handleRemoveBug(bugReport.issue_id)}
-                className="remove-btn"
-              />
-            </div>
+            <Link to={`/bugs/${bugReport.id}`} className="bug-report-link"> 
+              <h3>ID: {bugReport.issue_id}</h3>
+              <div className="bug-report-content">
+                Reported by {bugReport.username} on {bugReport.date}. It is
+                currently <p className="bug-report-status">{bugReport.status}.</p>
+              </div>
+            </Link>
+            <DeleteBugReport
+              issue_id={bugReport.issue_id}
+              onRemove={() => handleRemoveBug(bugReport.issue_id)}
+              className="remove-btn"
+            />
           </div>
         ))}
       </div>

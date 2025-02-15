@@ -1,92 +1,50 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
-const BugReportDetails = ({ bugId }) => {
+const API_URL = "http://localhost:5000/api/bugs";
+
+export default function BugReportDetails() {
+  const { issue_id } = useParams(); // Get issue_id from the URL
   const [bug, setBug] = useState(null);
-  const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  
-  // Fetch bug details
+  // Fetch bug details based on issue_id
   useEffect(() => {
-    fetch(`http://localhost:5000/api/bugs/${bugId}`)
-      .then((response) => {
+    async function fetchBugDetails() {
+      try {
+        const response = await fetch(`${API_URL}/${issue_id}`);
         if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+          throw new Error(`Failed to fetch bug details: ${response.status}`);
         }
-        return response.json();
-      })
-      .then((data) => {
-        setBug(data); // Set the bug details
-      })
-      .catch((error) => {
-        setError(error.message);
+        const data = await response.json();
+        setBug(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
         setLoading(false);
-      });
-  }, [bugId]);
-
-  // Fetch comments for the bug
-  useEffect(() => {
-    if (bug) {
-      fetch(`http://localhost:5000/api/comments/${bug.issue_id}`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setComments(data); // Set the comments
-          setLoading(false); // Set loading to false
-        })
-        .catch((error) => {
-          setError(error.message);
-          setLoading(false);
-        });
+      }
     }
-  }, [bug]);
 
-  // Display loading state
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+    fetchBugDetails();
+  }, [issue_id]); // Re-fetch when issue_id changes
 
-  // Display error message
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
+  if (!bug) return <p>Bug report not found.</p>;
 
-  // Display the bug and its comments
   return (
-    <div>
-      {bug && (
-        <div>
-          <h1>Bug Details</h1>
-          <p>{bug.id}</p>
-          <p>{bug.issue}</p>
-          <p>Reported by: {bug.username} on: {bug.date}</p>
-          <p>Status: {bug.status}</p>
-        </div>
-      )}
-
-      <h2>Comments</h2>
-      {comments.length > 0 ? (
-        <ul>
-          {comments.map((comment) => (
-            <li key={comment.id}>
-              <p>{comment.comment}</p>
-              <p>{comment.id}: posted by {comment.username} @ Date: {comment.date}</p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No comments found for this bug.</p>
-      )}
-    
+    <div className="bug-details">
+            <button onClick={() => navigate(-1)} className="cta-button">
+        &larr; Back
+      </button>
+      <h1>Bug Report Details</h1>
+      <p><strong>ID:</strong> {bug.issue_id}</p>
+      <p><strong>Reported by:</strong> {bug.username}</p>
+      <p><strong>Date:</strong> {bug.date}</p>
+      <p><strong>Status:</strong> {bug.status}</p>
+      <p><strong>Issue:</strong> {bug.issue}</p>
     </div>
   );
-};
-
-export default BugReportDetails;
+}

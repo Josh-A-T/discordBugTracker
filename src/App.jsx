@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Modal from "./components/Modal";
+import BugReportDetails from "./components/BugReportDetails";
 import ViewAllBugReports from "./components/viewAllBugReports";
 import NewBugReport from "./components/newBugReport";
 
@@ -27,7 +29,12 @@ function App() {
       )}
 
       {/* View all bug reports */}
-      <ViewAllBugReports refresh={refreshBugReports} />
+      <Router>
+      <Routes>
+        <Route path="/" element={<ViewAllBugReports />} />
+        <Route path="/bugs/:issue_id" element={<BugReportDetails />} />
+      </Routes>
+    </Router>
     </div>
   );
 }
