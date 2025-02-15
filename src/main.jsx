@@ -1,10 +1,11 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './stylesheet.css'
-import BugList from './App.jsx'
+import App from './App.jsx'
+
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BugList/>
+    <App/>
   </StrictMode>,
 )
