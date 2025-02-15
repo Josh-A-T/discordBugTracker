@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 const API_URL = "http://localhost:5000/api/bugs";
 
 export default function ViewAllBugReports() {
@@ -28,7 +27,7 @@ export default function ViewAllBugReports() {
         <div className="content-card">
             <div className="feature-grid">
                 {bugReports.map((bugReport) => (
-                    <div className="feature-card" key={bugReport.id} onClick={bugReportDetails()}>
+                    <div className="feature-card" key={bugReport.id}>
                         <h3>Report ID: {bugReport.issue_id}</h3>
                         <p>Report Details: {bugReport.issue}</p>
                         <p>

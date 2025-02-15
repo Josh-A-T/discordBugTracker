@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const ReportBug = () => {
+const newBugReport = () => {
   const [username, setUsername] = useState("");
   const [issue, setIssue] = useState("");
   const [loading, setLoading] = useState(false);
@@ -75,4 +75,4 @@ const ReportBug = () => {
   );
 };
 
-export default ReportBug;
+export default newBugReport;

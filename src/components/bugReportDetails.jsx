@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const BugDetails = ({ bugId }) => {
+const bugReportDetails = ({ bugId }) => {
   const [bug, setBug] = useState(null);
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -88,4 +88,4 @@ const BugDetails = ({ bugId }) => {
   );
 };
 
-export default BugDetails;
+export default bugReportDetails;
